@@ -1,0 +1,18 @@
+/* hsla(210deg, 30%, 8%, 0.85); */
+/* hsl(210deg, 30%, 12%); */
+/* hsl(210deg, 30%, 8%) */
+#root,
+body {
+	background-color: hsl(210deg, 30%, 8%);
+	color: beige;
+	font-family: 'Roboto', sans-serif;
+	font-size: 12px;
+	line-height: 1.5;
+	margin: 0;
+	padding: 0;
+	min-height: 100vh;
+	display: flex;
+	width: 100%;
+}
+
+
