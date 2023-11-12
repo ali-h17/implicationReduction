@@ -2,3 +2,23 @@
     display: flex;
     width: 100%;
 }
+
+.chart-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.warning {
+    /* width: 100%; */
+    border: 2px solid hsl(210deg, 30%, 12%);
+    font-size: 1.5rem;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+/* border: 2px solid hsl(210deg, 30%, 12%);
+	background-color: hsla(210deg, 30%, 8%, 0.85); */

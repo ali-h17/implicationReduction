@@ -1,9 +1,9 @@
 import '../styles/ChartBox.css';
-import TableRowInterface from '../interfaces/TableRowInterface';
+import StateNode from '../interfaces/StateNode';
 
 interface ChartBoxProps {
 	position: string;
-	tableData: TableRowInterface[];
+	tableData: StateNode[];
 }
 
 function ChartBox({ position, tableData }: ChartBoxProps) {

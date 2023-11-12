@@ -1,4 +1,4 @@
-interface TableRowInterface {
+interface StateNode {
 	currentState: string;
 	input: string;
 	firstNextState: string;
@@ -6,4 +6,4 @@ interface TableRowInterface {
 	output: string;
 }
 
-export default TableRowInterface;
+export default StateNode;

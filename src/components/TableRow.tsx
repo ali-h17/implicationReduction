@@ -1,11 +1,11 @@
-import TableRowInterface from '../interfaces/TableRowInterface';
+import StateNode from '../interfaces/StateNode';
 
 interface TableRowProps {
-	row: TableRowInterface;
+	row: StateNode;
 	index: number;
 	handleInputChange: (
 		index: number,
-		field: keyof TableRowInterface,
+		field: keyof StateNode,
 		value: string
 	) => void;
 	handleDeleteRow: (index: number) => void;
@@ -19,17 +19,28 @@ function TableRow({
 }: TableRowProps) {
 	return (
 		<tr>
-
-			<td style={{borderRight: '2px solid hsl(210deg, 30%, 12%)', borderBottom: '2px solid hsl(210deg, 30%, 12%)'}}>
+			<td
+				style={{
+					borderRight: '2px solid hsl(210deg, 30%, 12%)',
+					borderBottom: '2px solid hsl(210deg, 30%, 12%)',
+				}}
+			>
 				<input
 					type="text"
 					value={row.currentState}
-					onChange={(e) => handleInputChange(index, 'currentState', e.target.value)}
+					onChange={(e) =>
+						handleInputChange(index, 'currentState', e.target.value)
+					}
 					placeholder="_"
 				/>
 			</td>
 
-			<td style={{borderRight: '2px solid hsl(210deg, 30%, 12%)', borderBottom: '2px solid hsl(210deg, 30%, 12%)'}}>
+			<td
+				style={{
+					borderRight: '2px solid hsl(210deg, 30%, 12%)',
+					borderBottom: '2px solid hsl(210deg, 30%, 12%)',
+				}}
+			>
 				<div className="row-container">
 					<input
 						type="text"
@@ -50,7 +61,7 @@ function TableRow({
 				</div>
 			</td>
 
-			<td style={{borderBottom: '2px solid hsl(210deg, 30%, 12%)'}}>
+			<td style={{ borderBottom: '2px solid hsl(210deg, 30%, 12%)' }}>
 				<input
 					type="text"
 					value={row.output}

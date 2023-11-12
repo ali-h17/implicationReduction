@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import Chart from './components/Chart';
 import Table from './components/Table';
-import TableRowInterface from './interfaces/TableRowInterface';
+import StateNode from './interfaces/StateNode';
 import './styles/App.css';
 
-const initialTableData: TableRowInterface[] = [
+const initialTableData: StateNode[] = [
 	{
 		currentState: 'a',
 		input: '',
@@ -36,10 +36,12 @@ const initialTableData: TableRowInterface[] = [
 ];
 
 function App(): JSX.Element {
-	const [tableData, setTableData] =
-		useState<TableRowInterface[]>(initialTableData);
+	const [tableData, setTableData] = useState<StateNode[]>(initialTableData);
 
 	const [runChart, setRunChart] = useState(false);
+	const [message, setMessage] = useState(
+		'Visualization will only work for 10 states or less.'
+	);
 
 	return (
 		<div className="container">
@@ -47,9 +49,18 @@ function App(): JSX.Element {
 				tableData={tableData}
 				setTableData={setTableData}
 				setRunChart={setRunChart}
+				setMessage={setMessage}
 			/>
 
-			{runChart &&<Chart tableData={tableData} />}
+			<div className="chart-container">
+				{runChart === false ? (
+					<div className="warning">
+						<span>{message}</span>
+					</div>
+				) : (
+					<Chart tableData={tableData} />
+				)}
+			</div>
 		</div>
 	);
 }
