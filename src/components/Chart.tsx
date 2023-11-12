@@ -1,16 +1,19 @@
 import StateNode from '../interfaces/StateNode';
+import StateReducer from '../classes/StateReducer';
 import ChartBox from './ChartBox';
 import '../styles/Chart.css';
 
 interface ChartProps {
 	tableData: StateNode[];
+	stateReducer: StateReducer;
 }
 
-export default function Chart({ tableData }: ChartProps): JSX.Element {
+function Chart({ tableData, stateReducer: sr }: ChartProps): JSX.Element {
+
+
 	return (
 		<div className="chart">
 			{tableData.map((rowData, i) => {
-				// if (i === 0) return null;
 
 				return (
 					<div key={i} className="row">
@@ -19,6 +22,8 @@ export default function Chart({ tableData }: ChartProps): JSX.Element {
 								key={`${i}-${j}`}
 								position={`${i}${j}`}
 								tableData={tableData}
+								state={sr.sortStateStr(`${rowData.currentState}-${tableData[j].currentState}`)}
+								stateReducer={sr}
 							/>
 						))}
 					</div>
@@ -27,3 +32,5 @@ export default function Chart({ tableData }: ChartProps): JSX.Element {
 		</div>
 	);
 }
+
+export default Chart;

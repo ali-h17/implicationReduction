@@ -6,7 +6,7 @@
     align-items: center;
 	padding: 1rem;
 	position: relative;
-	flex: 0.3;
+	flex: 4;
 	min-width: 40%;
 }
 
@@ -79,4 +79,11 @@ svg {
 	justify-content: center;
 	align-items: center;
 	color: beige;
+}
+
+@media screen and (max-width: 768px) {
+	.table {
+		flex: 1;
+	}
+	
 }

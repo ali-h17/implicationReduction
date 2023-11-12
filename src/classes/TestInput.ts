@@ -66,63 +66,63 @@ const testInput: StateNode[] = [
 	},
 ];
 
-const initialTableData: StateNode[] = [
-	{
-		currentState: 'a',
-		input: '',
-		firstNextState: 'd',
-		secondNextState: 'c',
-		output: '0',
-	},
-	{
-		currentState: 'b',
-		input: '',
-		firstNextState: 'f',
-		secondNextState: 'h',
-		output: '0',
-	},
-	{
-		currentState: 'c',
-		input: '',
-		firstNextState: 'e',
-		secondNextState: 'd',
-		output: '1',
-	},
-	{
-		currentState: 'd',
-		input: '',
-		firstNextState: 'a',
-		secondNextState: 'e',
-		output: '0',
-	},
-	{
-		currentState: 'e',
-		input: '',
-		firstNextState: 'c',
-		secondNextState: 'a',
-		output: '1',
-	},
-	{
-		currentState: 'f',
-		input: '',
-		firstNextState: 'f',
-		secondNextState: 'b',
-		output: '1',
-	},
-	{
-		currentState: 'g',
-		input: '',
-		firstNextState: 'b',
-		secondNextState: 'h',
-		output: '0',
-	},
-	{
-		currentState: 'h',
-		input: '',
-		firstNextState: 'c',
-		secondNextState: 'g',
-		output: '1',
-	},
-];
+// const initialTableData: StateNode[] = [
+// 	{
+// 		currentState: 'a',
+// 		input: '',
+// 		firstNextState: 'd',
+// 		secondNextState: 'c',
+// 		output: '0',
+// 	},
+// 	{
+// 		currentState: 'b',
+// 		input: '',
+// 		firstNextState: 'f',
+// 		secondNextState: 'h',
+// 		output: '0',
+// 	},
+// 	{
+// 		currentState: 'c',
+// 		input: '',
+// 		firstNextState: 'e',
+// 		secondNextState: 'd',
+// 		output: '1',
+// 	},
+// 	{
+// 		currentState: 'd',
+// 		input: '',
+// 		firstNextState: 'a',
+// 		secondNextState: 'e',
+// 		output: '0',
+// 	},
+// 	{
+// 		currentState: 'e',
+// 		input: '',
+// 		firstNextState: 'c',
+// 		secondNextState: 'a',
+// 		output: '1',
+// 	},
+// 	{
+// 		currentState: 'f',
+// 		input: '',
+// 		firstNextState: 'f',
+// 		secondNextState: 'b',
+// 		output: '1',
+// 	},
+// 	{
+// 		currentState: 'g',
+// 		input: '',
+// 		firstNextState: 'b',
+// 		secondNextState: 'h',
+// 		output: '0',
+// 	},
+// 	{
+// 		currentState: 'h',
+// 		input: '',
+// 		firstNextState: 'c',
+// 		secondNextState: 'g',
+// 		output: '1',
+// 	},
+// ];
 
-export default { testInput, initialTableData};   
+export default  testInput;   

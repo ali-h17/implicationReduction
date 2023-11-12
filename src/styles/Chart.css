@@ -1,3 +1,15 @@
 .chart {
 	margin: 30px;
 } 
+.row {
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+@media screen and (max-width: 768px) {
+	.chart {
+		scale: 0.8;
+		flex: 1;
+	}
+	
+}

@@ -4,6 +4,7 @@ class StateReducer {
 	private stateTable: StateNode[];
 	private dependencyMap: Map<string, string[]> = new Map<string, string[]>();
     private possibleMoves: Map<string, string[]> = new Map<string, string[]>();
+	private chartMap: Map<string, string[]> = new Map<string, string[]>();
 	private impossibleSet: Set<string> = new Set<string>();
 	private possibleSet: Set<string> = new Set<string>();
 
@@ -14,12 +15,11 @@ class StateReducer {
         this.buildChart();
 	}
 
-    private sortStateStr(str: string): string {
+    public sortStateStr(str: string): string {
         return str.split('-').sort().join('-');
     }
 
 	private removeImpossibleStates(): void {
-
         for (const impState of this.impossibleSet) {
 
             const dependencies = this.dependencyMap.get(impState);
@@ -51,6 +51,7 @@ class StateReducer {
 					);
 					this.possibleSet.delete(impState);
 					this.impossibleSet.add(impState);
+					this.chartMap.set(impState, []);
 					continue;
 				}
 				//check dependency for first next state
@@ -62,11 +63,14 @@ class StateReducer {
 						`${this.stateTable[i].currentState}-${this.stateTable[j].currentState}`
 					);
 
-					if (key !== value)
+					if (key !== value) {
 						this.dependencyMap.set(key, [
 							...(this.dependencyMap.get(key) || []),
 							value,
 						]);
+
+						this.chartMap.set(value, [...(this.chartMap.get(value) || []), key] );
+					}
 				}
 
 				//check dependency for second next state
@@ -79,11 +83,13 @@ class StateReducer {
 						`${this.stateTable[i].currentState}-${this.stateTable[j].currentState}`
 					);
 
-					if (key !== value)
+					if (key !== value){
 						this.dependencyMap.set(key, [
 							...(this.dependencyMap.get(key) || []),
 							value,
 						]);
+						this.chartMap.set(value, [...(this.chartMap.get(value) || []), key] );
+					}
 				}
 			}
 		}
@@ -98,7 +104,7 @@ class StateReducer {
         }
     }
 
-    private buildEquivalentClasses(): void {
+    private buildEquivalenceClasses(): void {
         const visited: Set<string> = new Set<string>();
         this.equivalentClasses = [];
     
@@ -128,17 +134,36 @@ class StateReducer {
         this.buildDependencyMap();
         this.removeImpossibleStates();
         this.buildPossibleMoves();
-        this.buildEquivalentClasses();
+        this.buildEquivalenceClasses();
     }
 
-    public getEquivalentClasses(): string[][] {
+    public getEquivalenceClasses(): string[][] {
         return this.equivalentClasses;
     }
 
-    public getDependencyMapStr(): Map<string, string[]> {
+    public getDependencyMap(): Map<string, string[]> {
         return this.dependencyMap;
     }
    
+	public getChartMap(): Map<string, string[]> {
+		return this.chartMap;
+	}
+
+	public getImpssibleSet(): Set<string> {
+		return this.impossibleSet;
+	}
+
+	public getAllEqualStates(): string[] {
+		const allStates: string[] = [];
+		for (const equivalenceClass of this.equivalentClasses) {
+			allStates.push(...equivalenceClass);
+		}
+		return allStates;
+	}
+	
+	public getPossibleMoves(): Map<string, string[]> {
+		return this.possibleMoves;
+	}
 }
 
 export default StateReducer;

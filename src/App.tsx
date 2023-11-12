@@ -1,66 +1,69 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Chart from './components/Chart';
 import Table from './components/Table';
 import StateNode from './interfaces/StateNode';
 import './styles/App.css';
-
-const initialTableData: StateNode[] = [
-	{
-		currentState: 'a',
-		input: '',
-		firstNextState: 'a',
-		secondNextState: 'b',
-		output: '0',
-	},
-	{
-		currentState: 'b',
-		input: '',
-		firstNextState: 'b',
-		secondNextState: 'd',
-		output: '1',
-	},
-	{
-		currentState: 'c',
-		input: '',
-		firstNextState: 'c',
-		secondNextState: 'd',
-		output: '1',
-	},
-	{
-		currentState: 'd',
-		input: '',
-		firstNextState: 'b',
-		secondNextState: 'a',
-		output: '0',
-	},
-];
+import testInput from './classes/TestInput'; 
+import StateReducer from './classes/StateReducer';
+import EquivalnceCircle from './components/EquivalenceCircle';
 
 function App(): JSX.Element {
-	const [tableData, setTableData] = useState<StateNode[]>(initialTableData);
+	const [tableData, setTableData] = useState<StateNode[]>(testInput);
+	const stateReducer = useMemo(() => new StateReducer(tableData), [tableData]);
+
+
+//	const [dependencyMap, setDependencyMap] = useState<Map<string, string[]>>();
 
 	const [runChart, setRunChart] = useState(false);
 	const [message, setMessage] = useState(
 		'Visualization will only work for 10 states or less.'
 	);
 
+	function handleRunChart() {
+		//only run if all fields are filled
+		for (let i = 0; i < tableData.length; i++) {
+			const row = tableData[i];
+			if (
+				row.currentState === '' ||
+				//row.input === '' ||
+				row.firstNextState === '' ||
+				row.secondNextState === '' ||
+				row.output === ''
+			) {
+				setMessage('Please fill out all fields.');
+				return;
+			}
+		}
+		setRunChart(true);
+	}
+
 	return (
 		<div className="container">
 			<Table
 				tableData={tableData}
 				setTableData={setTableData}
-				setRunChart={setRunChart}
-				setMessage={setMessage}
 			/>
+			
 
 			<div className="chart-container">
 				{runChart === false ? (
-					<div className="warning">
-						<span>{message}</span>
+					<div className='box'>
+						<div className="warning">
+							<span>{message}</span>
+						</div>
+						<button className='run-chart-btn' onClick={handleRunChart}>Run Chart</button>
 					</div>
 				) : (
-					<Chart tableData={tableData} />
+					<>
+						<Chart tableData={tableData} stateReducer={stateReducer} />
+						<div className='equivalence-circle'>
+							<EquivalnceCircle stateReducer={stateReducer} />
+						</div>
+					</>
 				)}
+
 			</div>
+
 		</div>
 	);
 }

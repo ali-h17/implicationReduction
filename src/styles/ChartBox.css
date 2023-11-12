@@ -16,6 +16,7 @@
 .chart-text {
 	height: 100%;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
@@ -39,3 +40,10 @@
 	font-size: 16px; /* Adjust font size as needed */
 }
 
+.impossible-cross {
+	position: absolute;
+	/* center */
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
