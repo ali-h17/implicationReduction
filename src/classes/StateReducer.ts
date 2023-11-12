@@ -1,87 +1,22 @@
 import StateNode from '../interfaces/StateNode.ts';
-import TestInput from './TestInput.ts';
-/*
-interface StateNode {
-	currentState: string;
-	input: string;
-	firstNextState: string;
-	secondNextState: string;
-	output: string;
-}
-*/
-
-// const initialTableData: StateNode[] = [
-// 	{
-// 		currentState: 'a',
-// 		input: '',
-// 		firstNextState: 'd',
-// 		secondNextState: 'c',
-// 		output: '0',
-// 	},
-// 	{
-// 		currentState: 'b',
-// 		input: '',
-// 		firstNextState: 'f',
-// 		secondNextState: 'h',
-// 		output: '0',
-// 	},
-// 	{
-// 		currentState: 'c',
-// 		input: '',
-// 		firstNextState: 'e',
-// 		secondNextState: 'd',
-// 		output: '1',
-// 	},
-// 	{
-// 		currentState: 'd',
-// 		input: '',
-// 		firstNextState: 'a',
-// 		secondNextState: 'e',
-// 		output: '0',
-// 	},
-// 	{
-// 		currentState: 'e',
-// 		input: '',
-// 		firstNextState: 'c',
-// 		secondNextState: 'a',
-// 		output: '1',
-// 	},
-// 	{
-// 		currentState: 'f',
-// 		input: '',
-// 		firstNextState: 'f',
-// 		secondNextState: 'b',
-// 		output: '1',
-// 	},
-// 	{
-// 		currentState: 'g',
-// 		input: '',
-// 		firstNextState: 'b',
-// 		secondNextState: 'h',
-// 		output: '0',
-// 	},
-// 	{
-// 		currentState: 'h',
-// 		input: '',
-// 		firstNextState: 'c',
-// 		secondNextState: 'g',
-// 		output: '1',
-// 	},
-// ];
-
-function sortStateStr(str: string): string {
-	return str.split('-').sort().join('-');
-}
 
 class StateReducer {
 	private stateTable: StateNode[];
 	private dependencyMap: Map<string, string[]> = new Map<string, string[]>();
+    private possibleMoves: Map<string, string[]> = new Map<string, string[]>();
 	private impossibleSet: Set<string> = new Set<string>();
 	private possibleSet: Set<string> = new Set<string>();
 
+    private equivalentClasses: string[][] = [];
+
 	constructor(stateTable: StateNode[]) {
 		this.stateTable = stateTable;
+        this.buildChart();
 	}
+
+    private sortStateStr(str: string): string {
+        return str.split('-').sort().join('-');
+    }
 
 	private removeImpossibleStates(): void {
 
@@ -104,14 +39,14 @@ class StateReducer {
 		for (let i = 0; i < this.stateTable.length - 1; i++) {
 			for (let j = i + 1; j < this.stateTable.length; j++) {
 				//add all possible states to possibleSet
-				const posState = sortStateStr(
+				const posState = this.sortStateStr(
 					`${this.stateTable[i].currentState}-${this.stateTable[j].currentState}`
 				);
 				this.possibleSet.add(posState);
 
 				//if outputs are different, then they are not equivalent
 				if (this.stateTable[i].output !== this.stateTable[j].output) {
-					const impState = sortStateStr(
+					const impState = this.sortStateStr(
 						`${this.stateTable[i].currentState}-${this.stateTable[j].currentState}`
 					);
 					this.possibleSet.delete(impState);
@@ -120,10 +55,10 @@ class StateReducer {
 				}
 				//check dependency for first next state
 				if (this.stateTable[i].firstNextState !== this.stateTable[j].firstNextState) {
-					const key = sortStateStr(
+					const key = this.sortStateStr(
 						`${this.stateTable[i].firstNextState}-${this.stateTable[j].firstNextState}`
 					);
-					const value = sortStateStr(
+					const value = this.sortStateStr(
 						`${this.stateTable[i].currentState}-${this.stateTable[j].currentState}`
 					);
 
@@ -137,10 +72,10 @@ class StateReducer {
 				//check dependency for second next state
 				if (this.stateTable[i].secondNextState !== this.stateTable[j].secondNextState) {
 
-					const key = sortStateStr(
+					const key = this.sortStateStr(
 						`${this.stateTable[i].secondNextState}-${this.stateTable[j].secondNextState}`
 					);
-					const value = sortStateStr(
+					const value = this.sortStateStr(
 						`${this.stateTable[i].currentState}-${this.stateTable[j].currentState}`
 					);
 
@@ -155,17 +90,55 @@ class StateReducer {
 	
 	}
 
-    public test(): void {
+    private buildPossibleMoves(): void {
+        for (const state of this.possibleSet) {
+            const [first, second] = state.split('-');
+            this.possibleMoves.set(first, [...(this.possibleMoves.get(first) || []), second]);
+            this.possibleMoves.set(second, [...(this.possibleMoves.get(second) || []), first]);
+        }
+    }
+
+    private buildEquivalentClasses(): void {
+        const visited: Set<string> = new Set<string>();
+        this.equivalentClasses = [];
+    
+        for (const state of this.possibleMoves.keys()) {
+            if (!visited.has(state)) {
+                const equivalenceClass: string[] = [];
+                this.dfs(state, equivalenceClass, visited);
+                this.equivalentClasses.push(equivalenceClass);
+            }
+        }
+    }
+    
+    private dfs(currentState: string, equivalenceClass: string[], visited: Set<string>): void {
+        equivalenceClass.push(currentState);
+        visited.add(currentState);
+    
+        const neighbors = this.possibleMoves.get(currentState) || [];
+    
+        for (const neighbor of neighbors) {
+            if (!visited.has(neighbor)) {
+                this.dfs(neighbor, equivalenceClass, visited);
+            }
+        }
+    }
+    
+    private buildChart(): void {
         this.buildDependencyMap();
         this.removeImpossibleStates();
-
-        // console.log(this.dependencyMap);
-        // console.log(this.impossibleSet);
+        this.buildPossibleMoves();
+        this.buildEquivalentClasses();
     }
+
+    public getEquivalentClasses(): string[][] {
+        return this.equivalentClasses;
+    }
+
+    public getDependencyMapStr(): Map<string, string[]> {
+        return this.dependencyMap;
+    }
+   
 }
-
-const sr = new StateReducer(TestInput);
-
-sr.test();
 
 export default StateReducer;
