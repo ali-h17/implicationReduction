@@ -30,6 +30,7 @@
     /* width: 100%; */
     border: 2px solid hsl(210deg, 30%, 12%);
     font-size: 1.5rem;
+    margin: 1rem;
     padding: 1rem;
     display: flex;
     justify-content: center;
@@ -50,6 +51,9 @@
 @media screen and (max-width: 768px) {
     .container {
         flex-direction: column;
+    }
+    .equivalence-circle {
+        scale: 0.8;
     }
     
 }

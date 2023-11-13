@@ -6,10 +6,11 @@ interface EquivalenceCircleProps {
 }
 
 const colors = [
-	'hsl(333deg, 100%, 52%)',
-	'hsl(230deg, 100%, 69%)',
-	'#F4BF96',
-	'#FCf657',
+	'hsl(333, 100%, 52%)',
+	'hsl(360, 83%, 33%)',
+	'hsl(230, 100%, 69%)',
+	'hsl(189, 100%, 40%)',
+	'hsl(245, 100%, 23%)',
 ];
 
 const stateCoOrdinates = new Map<string, number[]>();

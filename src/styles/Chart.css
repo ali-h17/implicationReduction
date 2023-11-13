@@ -1,5 +1,6 @@
 .chart {
 	margin: 30px;
+	/* background-color: hsla(210deg, 30%, 8%, 0.85); */
 } 
 .row {
 	display: flex;
