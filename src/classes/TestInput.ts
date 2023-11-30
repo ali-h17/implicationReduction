@@ -1,70 +1,163 @@
 import  StateNode  from '../interfaces/StateNode';
 
-const testInput: StateNode[] = [
+// const testInput: StateNode[] = [
+// 	{
+// 		currentState: 'a',
+// 		input: '',
+// 		firstNextState: 'e',
+// 		secondNextState: 'e',
+// 		output: '1',
+// 		secondOutput: '',
+// 	},
+// 	{
+// 		currentState: 'b',
+// 		input: '',
+// 		firstNextState: 'c',
+// 		secondNextState: 'e',
+// 		output: '1',
+// 		secondOutput: '',
+
+// 	},
+// 	{
+// 		currentState: 'c',
+// 		input: '',
+// 		firstNextState: 'i',
+// 		secondNextState: 'h',
+// 		output: '0',
+// 		secondOutput: '',
+
+// 	},
+// 	{
+// 		currentState: 'd',
+// 		input: '',
+// 		firstNextState: 'h',
+// 		secondNextState: 'a',
+// 		output: '1',
+// 		secondOutput: '',
+
+// 	},
+// 	{
+// 		currentState: 'e',
+// 		input: '',
+// 		firstNextState: 'i',
+// 		secondNextState: 'f',
+// 		output: '0',
+// 		secondOutput: '',
+
+// 	},
+// 	{
+// 		currentState: 'f',
+// 		input: '',
+// 		firstNextState: 'e',
+// 		secondNextState: 'g',
+// 		output: '0',
+// 		secondOutput: '',
+
+// 	},
+// 	{
+// 		currentState: 'g',
+// 		input: '',
+// 		firstNextState: 'h',
+// 		secondNextState: 'b',
+// 		output: '1',
+// 		secondOutput: '',
+
+// 	},
+// 	{
+// 		currentState: 'h',
+// 		input: '',
+// 		firstNextState: 'c',
+// 		secondNextState: 'd',
+// 		output: '0',
+// 		secondOutput: '',
+
+// 	},
+//     {
+// 		currentState: 'i',
+// 		input: '',
+// 		firstNextState: 'f',
+// 		secondNextState: 'b',
+// 		output: '1',
+// 		secondOutput: '',
+
+// 	},
+// ];
+
+const test2: StateNode[] = [
 	{
 		currentState: 'a',
 		input: '',
-		firstNextState: 'e',
-		secondNextState: 'e',
+		firstNextState: 'h',
+		secondNextState: 'c',
 		output: '1',
+		secondOutput: '0',
 	},
 	{
 		currentState: 'b',
 		input: '',
 		firstNextState: 'c',
-		secondNextState: 'e',
-		output: '1',
+		secondNextState: 'd',
+		output: '0',
+		secondOutput: '1',
+
 	},
 	{
 		currentState: 'c',
 		input: '',
-		firstNextState: 'i',
-		secondNextState: 'h',
+		firstNextState: 'h',
+		secondNextState: 'b',
 		output: '0',
+		secondOutput: '0',
+
 	},
 	{
 		currentState: 'd',
 		input: '',
-		firstNextState: 'h',
-		secondNextState: 'a',
-		output: '1',
+		firstNextState: 'f',
+		secondNextState: 'h',
+		output: '0',
+		secondOutput: '0',
+
 	},
 	{
 		currentState: 'e',
 		input: '',
-		firstNextState: 'i',
+		firstNextState: 'c',
 		secondNextState: 'f',
 		output: '0',
+		secondOutput: '1',
+
 	},
 	{
 		currentState: 'f',
 		input: '',
-		firstNextState: 'e',
+		firstNextState: 'f',
 		secondNextState: 'g',
 		output: '0',
+		secondOutput: '0',
+
 	},
 	{
 		currentState: 'g',
 		input: '',
-		firstNextState: 'h',
-		secondNextState: 'b',
+		firstNextState: 'g',
+		secondNextState: 'c',
 		output: '1',
+		secondOutput: '0',
+
 	},
 	{
 		currentState: 'h',
 		input: '',
-		firstNextState: 'c',
-		secondNextState: 'd',
-		output: '0',
-	},
-    {
-		currentState: 'i',
-		input: '',
-		firstNextState: 'f',
-		secondNextState: 'b',
+		firstNextState: 'a',
+		secondNextState: 'c',
 		output: '1',
+		secondOutput: '0',
+
 	},
-];
+
+]
+
 
 // const initialTableData: StateNode[] = [
 // 	{
@@ -125,4 +218,4 @@ const testInput: StateNode[] = [
 // 	},
 // ];
 
-export default  testInput;   
+export default test2 ;  

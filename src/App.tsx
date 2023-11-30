@@ -3,12 +3,13 @@ import Chart from './components/Chart';
 import Table from './components/Table';
 import StateNode from './interfaces/StateNode';
 import './styles/App.css';
-import testInput from './classes/TestInput'; 
+// import testInput from './classes/TestInput'; 
+import test2 from './classes/TestInput';
 import StateReducer from './classes/StateReducer';
 import EquivalnceCircle from './components/EquivalenceCircle';
 
 function App(): JSX.Element {
-	const [tableData, setTableData] = useState<StateNode[]>(testInput);
+	const [tableData, setTableData] = useState<StateNode[]>(test2);
 	const stateReducer = useMemo(() => new StateReducer(tableData), [tableData]);
 
 
@@ -28,7 +29,8 @@ function App(): JSX.Element {
 				//row.input === '' ||
 				row.firstNextState === '' ||
 				row.secondNextState === '' ||
-				row.output === ''
+				row.output === '' ||
+				row.secondOutput === ''
 			) {
 				setMessage('Please fill out all fields.');
 				return;

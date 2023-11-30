@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import '../styles/Table.css';
 import StateNode from '../interfaces/StateNode';
 import TableRow from './TableRow';
@@ -7,10 +8,9 @@ interface TableProps {
 	setTableData: React.Dispatch<React.SetStateAction<StateNode[]>>;
 }
 
-function Table({
-	tableData,
-	setTableData,
-}: TableProps): JSX.Element {
+function Table({ tableData, setTableData }: TableProps): JSX.Element {
+	const [twoOutputs, setTwoOutputs] = useState<boolean>(true);
+
 	const handleAddRow = () => {
 		setTableData([
 			...tableData,
@@ -20,6 +20,7 @@ function Table({
 				firstNextState: '',
 				secondNextState: '',
 				output: '',
+				secondOutput: '',
 			},
 		]);
 	};
@@ -30,7 +31,9 @@ function Table({
 		value: string
 	) => {
 		const updatedData = [...tableData];
+
 		updatedData[index][key] = value;
+
 		setTableData(updatedData);
 	};
 
@@ -39,7 +42,6 @@ function Table({
 		const updatedData = tableData.filter((_, i) => i !== index);
 		setTableData(updatedData);
 	};
-
 
 	return (
 		<div className="table">
@@ -59,12 +61,16 @@ function Table({
 							index={index}
 							handleInputChange={handleInputChange}
 							handleDeleteRow={handleDeleteRow}
+							twoOutputs={twoOutputs}
 						/>
 					))}
 				</tbody>
 			</table>
 			<div className="add-row">
 				<button onClick={handleAddRow}>Add Row</button>
+				<button onClick={() => setTwoOutputs(!twoOutputs)}>
+					Set Two Outputs
+				</button>
 			</div>
 		</div>
 	);

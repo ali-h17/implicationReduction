@@ -17,7 +17,8 @@ const stateCoOrdinates = new Map<string, number[]>();
 const equivalenceClassesColors = new Map<string, string>();
 
 function EquivalnceCircle({ stateReducer: sr }: EquivalenceCircleProps) {
-	const states = sr.getAllEqualStates();
+	// const states = sr.getAllEqualStates();
+	const states = sr.getAllStates();
 	const moves = sr.getPossibleMoves();
 
 	const setStateColors = useCallback((sr: StateReducer) => {

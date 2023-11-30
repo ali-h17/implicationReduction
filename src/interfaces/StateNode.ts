@@ -4,6 +4,7 @@ interface StateNode {
 	firstNextState: string;
 	secondNextState: string;
 	output: string;
+	secondOutput: string;
 }
 
 export default StateNode;

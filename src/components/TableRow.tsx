@@ -9,6 +9,7 @@ interface TableRowProps {
 		value: string
 	) => void;
 	handleDeleteRow: (index: number) => void;
+	twoOutputs: boolean;
 }
 
 function TableRow({
@@ -16,6 +17,7 @@ function TableRow({
 	index,
 	handleInputChange,
 	handleDeleteRow,
+	twoOutputs,
 }: TableRowProps) {
 	return (
 		<tr>
@@ -62,12 +64,24 @@ function TableRow({
 			</td>
 
 			<td style={{ borderBottom: '2px solid hsl(210deg, 30%, 12%)' }}>
-				<input
-					type="text"
-					value={row.output}
-					onChange={(e) => handleInputChange(index, 'output', e.target.value)}
-					placeholder="_"
-				/>
+				<div className="output">
+					<input
+						type="text"
+						value={row.output}
+						onChange={(e) => handleInputChange(index, 'output', e.target.value)}
+						placeholder="_"
+					/>
+					{twoOutputs ? (
+						<input
+							type="text"
+							value={row.secondOutput}
+							onChange={(e) =>
+								handleInputChange(index, 'secondOutput', e.target.value)
+							}
+							placeholder="_"
+						/>
+					) : null}
+				</div>
 			</td>
 
 			<td>
