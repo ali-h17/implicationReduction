@@ -12,10 +12,13 @@ Implication Tables are used in Digital Logic Design to reduce state table and re
 ## Screenshots
 
 ![Original Table](screenshots/original.jpg)
-*Description: This is the original table.*
+
+Description: This is the original table.
 
 ![Chart and Equivalence Circle](screenshots/chart.jpg)
-*Description: This screenshot shows the chart and equivalence circle.*
+
+Description: This screenshot shows the chart and equivalence circle.
 
 ![Reduced Table](screenshots/reduced.jpg)
-*Description: This image displays the reduced table.*
+
+Description: This image displays the reduced table.
