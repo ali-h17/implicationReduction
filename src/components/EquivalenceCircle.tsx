@@ -86,6 +86,7 @@ const EquivalnceCircle: React.FC<EquivalenceCircleProps> = React.memo(
 				{Array.from(stateCoOrdinates.entries()).map(([state, [x, y]]) => (
 					<>
 						<circle
+							key={`${x}-${y}`}
 							cx={x}
 							cy={y}
 							r={15}
@@ -93,7 +94,7 @@ const EquivalnceCircle: React.FC<EquivalenceCircleProps> = React.memo(
 							stroke="beige"
 							strokeWidth={2}
 						/>
-						<text x={x} y={y} textAnchor="middle" dy=".35em" fill="white">
+						<text key={state} x={x} y={y} textAnchor="middle" dy=".35em" fill="white">
 							{state}
 						</text>
 					</>
