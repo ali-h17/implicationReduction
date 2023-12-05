@@ -1,18 +1,41 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import '../styles/Table.css';
 import StateNode from '../interfaces/StateNode';
 import TableRow from './TableRow';
+import StateReducer from '../classes/StateReducer';
 
 interface TableProps {
 	tableData: StateNode[];
 	setTableData: React.Dispatch<React.SetStateAction<StateNode[]>>;
+	runChart: boolean;
+	setRunChart: React.Dispatch<React.SetStateAction<boolean>>;
+	stateReducer: StateReducer;
+	reducedTable: boolean;
+	setReducedTable: React.Dispatch<React.SetStateAction<boolean>>;
+	isMealy: boolean;
+	setIsMealy: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function Table({ tableData, setTableData }: TableProps): JSX.Element {
-	const [twoOutputs, setTwoOutputs] = useState<boolean>(true);
+function Table({
+	tableData,
+	setTableData,
+	runChart,
+	setRunChart,
+	stateReducer: sr,
+	reducedTable,
+	setReducedTable,
+	isMealy,
+	setIsMealy,
+}: TableProps): JSX.Element {
+	useEffect(() => {
+		if (reducedTable) {
+			const redTable = sr.getReducedTable();
+			setTableData([...redTable]);
+		}
+	}, [reducedTable, setTableData, sr]);
 
 	const handleAddRow = () => {
-		setTableData([
+		setTableData((tableData) => [
 			...tableData,
 			{
 				currentState: '',
@@ -23,6 +46,7 @@ function Table({ tableData, setTableData }: TableProps): JSX.Element {
 				secondOutput: '',
 			},
 		]);
+		setRunChart(false);
 	};
 
 	const handleInputChange = (
@@ -35,13 +59,29 @@ function Table({ tableData, setTableData }: TableProps): JSX.Element {
 		updatedData[index][key] = value;
 
 		setTableData(updatedData);
+		setRunChart(false);
 	};
 
 	const handleDeleteRow = (index: number) => {
 		if (tableData.length === 1) return;
 		const updatedData = tableData.filter((_, i) => i !== index);
 		setTableData(updatedData);
+		setRunChart(false);
 	};
+
+	const handleReducedChart = () => {
+		if (reducedTable) {
+			const table = sr.getTable();
+			setTableData(table);
+			setReducedTable(false);
+			return;
+		}
+		const redTable = sr.getReducedTable();
+		setTableData([...redTable]);
+		setReducedTable(true);
+	};
+
+	const btnText = reducedTable ? 'Original table' : 'Reduced table';
 
 	return (
 		<div className="table">
@@ -61,16 +101,47 @@ function Table({ tableData, setTableData }: TableProps): JSX.Element {
 							index={index}
 							handleInputChange={handleInputChange}
 							handleDeleteRow={handleDeleteRow}
-							twoOutputs={twoOutputs}
+							isMealy={isMealy}
+							reducedTable={reducedTable}
 						/>
 					))}
 				</tbody>
 			</table>
 			<div className="add-row">
-				<button onClick={handleAddRow}>Add Row</button>
-				<button onClick={() => setTwoOutputs(!twoOutputs)}>
-					Set Two Outputs
-				</button>
+				{!reducedTable ? (
+					<>
+						<button onClick={handleAddRow}>Add Row</button>
+						<button
+							onClick={() => {
+								setIsMealy((isMealy) => !isMealy);
+								setRunChart(false);
+							}}
+						>
+							Set {isMealy ? 'Moore' : 'Mealy'}
+						</button>
+						<button
+							onClick={() => {
+								setTableData([
+									{
+										currentState: '',
+										input: '',
+										firstNextState: '',
+										secondNextState: '',
+										output: '',
+										secondOutput: '',
+									},
+								]);
+								setRunChart(false);
+							}}
+						>
+							Clear
+						</button>
+					</>
+				) : null}
+
+				{runChart ? (
+					<button onClick={handleReducedChart}>{btnText}</button>
+				) : null}
 			</div>
 		</div>
 	);

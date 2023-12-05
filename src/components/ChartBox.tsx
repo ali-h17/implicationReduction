@@ -22,8 +22,7 @@ function ChartBox({
 	const isImpossible =
 		sr.getImpssibleSet().has(state) && neededStates.length !== 0;
 	const isConfirmed = sr.getConfirmedSet().has(state);
-	console.log(state, isConfirmed, isImpossible);
-	// console.log(sr.getImpssibleSet());
+	
 
 	return (
 		<div className="chart-box-container">

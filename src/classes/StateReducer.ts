@@ -2,6 +2,7 @@ import StateNode from '../interfaces/StateNode.ts';
 
 class StateReducer {
 	private stateTable: StateNode[];
+	private readonly originalStateTable: StateNode[] = [];
 	private dependencyMap: Map<string, string[]> = new Map<string, string[]>();
 	private possibleMoves: Map<string, string[]> = new Map<string, string[]>();
 	private chartMap: Map<string, string[]> = new Map<string, string[]>();
@@ -13,10 +14,11 @@ class StateReducer {
 
 	constructor(stateTable: StateNode[]) {
 		this.stateTable = stateTable;
+		this.originalStateTable = JSON.parse(JSON.stringify(stateTable));
 		this.buildChart();
 	}
 
-	private sortStateStr(str: string): string {
+	public sortStateStr(str: string): string {
 		return str.split('-').sort().join('-');
 	}
 
@@ -111,7 +113,6 @@ class StateReducer {
 						) &&
 						nextStatesEqual)
 				) {
-					console.log(this.sortStateStr(`${this.stateTable[i].currentState}-${this.stateTable[j].currentState}`));
 					this.confirmedSet.add(
 						this.sortStateStr(
 							`${this.stateTable[i].currentState}-${this.stateTable[j].currentState}`
@@ -144,6 +145,8 @@ class StateReducer {
 		}
 	}
 
+	
+
 	private buildPossibleMoves(): void {
 		for (const state of this.possibleSet) {
 			const [first, second] = state.split('-');
@@ -168,6 +171,23 @@ class StateReducer {
 				this.dfs(state, equivalenceClass, visited);
 				this.equivalentClasses.push(equivalenceClass);
 			}
+		}
+
+		let found = false;
+		for (const state of this.stateTable) {
+
+			for (const eClass of this.equivalentClasses) { 
+				if (eClass.includes(state.currentState)) {
+					found = true;
+					break;
+				}
+			}
+			if (!found) {
+				this.equivalentClasses.push([state.currentState]);
+			}
+			found = false;
+
+			
 		}
 	}
 
@@ -236,6 +256,41 @@ class StateReducer {
 		allStates.sort();
 
 		return allStates;
+	}
+
+	private getMainState(state: string): string {
+		for (const equivalenceClass of this.equivalentClasses) {
+			if (equivalenceClass.includes(state)) {
+				return equivalenceClass.sort()[0];
+			}
+		}
+		return '';
+	}
+
+	public getReducedTable(): StateNode[] {
+		const newTable: StateNode[] = [];
+		
+		for (const eClass of this.equivalentClasses) { 
+			const mainState = eClass.sort()[0];
+
+			this.stateTable.find((state) => {
+				if (state.currentState === mainState) {
+					state.firstNextState = this.getMainState(state.firstNextState) || '';
+					state.secondNextState = this.getMainState(state.secondNextState) || '';
+					newTable.push(state);
+					return true;
+				}
+				return false;
+			});
+		}
+		
+		newTable.sort((a, b) => a.currentState.localeCompare(b.currentState) );
+
+		return newTable;
+	}
+
+	public getTable(): StateNode[] {
+		return this.originalStateTable;
 	}
 }
 

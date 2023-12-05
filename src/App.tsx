@@ -1,24 +1,21 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import Chart from './components/Chart';
 import Table from './components/Table';
 import StateNode from './interfaces/StateNode';
 import './styles/App.css';
-// import testInput from './classes/TestInput'; 
 import test2 from './classes/TestInput';
 import StateReducer from './classes/StateReducer';
 import EquivalnceCircle from './components/EquivalenceCircle';
 
+let stateReducer = new StateReducer([]);
+
 function App(): JSX.Element {
 	const [tableData, setTableData] = useState<StateNode[]>(test2);
-	const stateReducer = useMemo(() => new StateReducer(tableData), [tableData]);
-
-
-//	const [dependencyMap, setDependencyMap] = useState<Map<string, string[]>>();
-
+	const [chartData, setChartData] = useState<StateNode[]>([]);
+	const [reducedTable, setReducedTable] = useState<boolean>(false);
+	const [isMealy, setisMealy] = useState<boolean>(true);
 	const [runChart, setRunChart] = useState(false);
-	const [message, setMessage] = useState(
-		'Visualization will only work for 10 states or less.'
-	);
+	const [message, setMessage] = useState('Click "Run Chart" to see the chart.');
 
 	function handleRunChart() {
 		//only run if all fields are filled
@@ -26,17 +23,23 @@ function App(): JSX.Element {
 			const row = tableData[i];
 			if (
 				row.currentState === '' ||
-				//row.input === '' ||
 				row.firstNextState === '' ||
 				row.secondNextState === '' ||
 				row.output === '' ||
-				row.secondOutput === ''
+				(isMealy && row.secondOutput === '')
 			) {
 				setMessage('Please fill out all fields.');
 				return;
 			}
 		}
+		
+		const currentTableData = [...tableData];
+		
+		
+		stateReducer = new StateReducer(currentTableData);
+		setChartData(currentTableData);
 		setRunChart(true);
+		setReducedTable(true);
 	}
 
 	return (
@@ -44,28 +47,34 @@ function App(): JSX.Element {
 			<Table
 				tableData={tableData}
 				setTableData={setTableData}
+				runChart={runChart}
+				setRunChart={setRunChart}
+				stateReducer={stateReducer}
+				reducedTable={reducedTable}
+				setReducedTable={setReducedTable}
+				isMealy={isMealy}
+				setIsMealy={setisMealy}
 			/>
-			
 
 			<div className="chart-container">
 				{runChart === false ? (
-					<div className='box'>
+					<div className="box">
 						<div className="warning">
 							<span>{message}</span>
 						</div>
-						<button className='run-chart-btn' onClick={handleRunChart}>Run Chart</button>
+						<button className="run-chart-btn" onClick={handleRunChart}>
+							Run Chart
+						</button>
 					</div>
 				) : (
 					<>
-						<Chart tableData={tableData} stateReducer={stateReducer} />
-						<div className='equivalence-circle'>
+						<Chart tableData={chartData} stateReducer={stateReducer} />
+						<div className="equivalence-circle">
 							<EquivalnceCircle stateReducer={stateReducer} />
 						</div>
 					</>
 				)}
-
 			</div>
-
 		</div>
 	);
 }
