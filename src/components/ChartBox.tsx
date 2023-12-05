@@ -35,8 +35,9 @@ function ChartBox({
 
 				{isConfirmed ? (
 					<svg
+						className='tick'
 						fill="beige"
-						height="48px"
+						width="36px"
 						version="1.1"
 						id="Capa_1"
 						xmlns="http://www.w3.org/2000/svg"
