@@ -1,6 +1,5 @@
 .chart {
-	margin: 30px;
-	/* background-color: hsla(210deg, 30%, 8%, 0.85); */
+	margin: 15px;
 } 
 .row {
 	display: flex;
@@ -9,7 +8,7 @@
 
 @media screen and (max-width: 768px) {
 	.chart {
-		scale: 0.8;
+		scale: 0.75;
 		flex: 1;
 	}
 	

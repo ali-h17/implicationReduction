@@ -85,8 +85,6 @@ function Table({
 
 	return (
 		<div className="table">
-			<h2>Implication Table Reduction</h2>
-
 			<table>
 				<thead>
 					<tr>
