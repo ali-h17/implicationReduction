@@ -40,13 +40,11 @@
 
 .equivalence-circle {
     position: absolute;
-    /* place top right */
+    margin: 15px;
     top: 0;
     right: 0;
 
 }
-/* border: 2px solid hsl(210deg, 30%, 12%);
-	background-color: hsla(210deg, 30%, 8%, 0.85); */
 
 @media screen and (max-width: 768px) {
     .container {

@@ -18,9 +18,14 @@ function App(): JSX.Element {
 	const [message, setMessage] = useState('Click "Run Chart" to see the chart.');
 
 	function handleRunChart() {
+		const allStates = new Set<string>();
 		//only run if all fields are filled
 		for (let i = 0; i < tableData.length; i++) {
+			allStates.add(tableData[i].currentState);
+		}
+		for (let i = 0; i < tableData.length; i++) {
 			const row = tableData[i];
+		
 			if (
 				row.currentState === '' ||
 				row.firstNextState === '' ||
@@ -30,7 +35,14 @@ function App(): JSX.Element {
 			) {
 				setMessage('Please fill out all fields.');
 				return;
+			} else if (allStates.size !== tableData.length) {
+				setMessage('Please make sure all states are unique.');
+				return;
+			} else if (allStates.has(row.firstNextState) === false || allStates.has(row.secondNextState) === false) {
+				setMessage('Please make sure all next states are valid.');
+				return;
 			}
+		
 		}
 		
 		const currentTableData = [...tableData];
