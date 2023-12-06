@@ -22,6 +22,9 @@
 }
 
 h2 {
+	position: absolute;
+	top: 0;
+	padding: 1rem;
 	color: beige;
 	font-size: 1.5rem;
 	margin: 1rem 0;
@@ -100,5 +103,6 @@ svg {
 		border: none;
 		border-bottom: 2px solid hsl(210deg, 30%, 12%);
 	}
-	
+
+
 }

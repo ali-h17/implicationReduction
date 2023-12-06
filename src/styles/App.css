@@ -27,7 +27,7 @@
 }
 
 .warning {
-    /* width: 100%; */
+
     border: 2px solid hsl(210deg, 30%, 12%);
     font-size: 1.5rem;
     margin: 1rem;
@@ -40,7 +40,10 @@
 
 .equivalence-circle {
     position: absolute;
-    margin: 15px;
+    top: 0;
+    right: 0;
+    margin-left: 15px;
+    margin-bottom: 5px;
     top: 0;
     right: 0;
 
@@ -51,7 +54,7 @@
         flex-direction: column;
     }
     .equivalence-circle {
-        scale: 0.8;
+        scale: 0.75;
     }
     
 }
