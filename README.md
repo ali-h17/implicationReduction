@@ -1,6 +1,6 @@
 # Implication Table Reduction
 
-Implication Tables are used in Digital Logic Design to reduce state table and remove redundent states
+Implication Tables are used in Digital Logic Design to reduce state tables and remove redundent states
 
 
 ## Features
